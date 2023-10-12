@@ -1,9 +1,9 @@
 import sqlite3
 import time
 import random
+from fpdf import FPDF
 connection = sqlite3.connect("question.db")
 sql = connection.cursor()
-
 # PRIMARY TABLE QUESTIONS
 sql.execute(
     """CREATE TABLE IF NOT EXISTS Questions(
@@ -67,7 +67,7 @@ def Add_Prudcts():
             break
 
 
-Add_Prudcts()
+# Add_Prudcts()
 
 
 def show_products():
@@ -79,10 +79,20 @@ def show_products():
     # datadegi questlani randomni chiqarib beradi
     # ENDI SHU CODNI PDFGA TIQIB CHIQARIB BERISH KERAK
     random.shuffle(result)
-    a = 0
-    for i in result:
-        a += 1
-        print(f'{a}:{i}')
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    for idx, row in enumerate(result):
+        question, option_a, option_b, option_c, option_d = row
+        pdf.cell(0, 10, f"{idx+1}: {question}", ln=True)
+        options = [option_a, option_b, option_c, option_d]
+        random.shuffle(options)
+        for option in options:
+            pdf.cell(0, 10, f"{option}", ln=True)
+
+    pdf.output("quiz.pdf")
 
 
 show_products()
