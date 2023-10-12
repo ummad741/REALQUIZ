@@ -82,8 +82,7 @@ def show_products():
     a = 0
     for i in result:
         a += 1
-        print(f'{a}:{i}')   
-            
+        print(f'{a}:{i}')
 
 
 show_products()
