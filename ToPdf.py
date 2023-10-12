@@ -1,1 +1,0 @@
-# yengli code yozila bolalarim
